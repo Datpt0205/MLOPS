@@ -21,4 +21,4 @@ COPY ./model_to_serve /app/model_to_serve
 EXPOSE 8000
 
 # Chạy bằng gunicorn cho production
-CMD ["gunicorn", "-w", "2", "-k", "uvicorn.workers.UvicornWorker", "-b", "0.0.0.0:8000", "--log-level", "info", "--access-logfile", "-", "--error-logfile", "-", "src.app:app"]
+CMD ["gunicorn", "-w", "2", "-k", "sync", "-b", "0.0.0.0:8000", "--log-level", "info", "--access-logfile", "-", "--error-logfile", "-", "src.app:app"]
