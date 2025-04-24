@@ -1,0 +1,33 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions *.so
+
+# Distribution / packaging .... (giữ các phần khác)
+
+# Environments
+.env
+.venv/
+env/
+venv/
+
+# IDE directories .idea/ .vscode/
+
+# OS generated files .DS_Store Thumbs.db
+
+# MLflow local tracking data
+mlruns/
+mlartifacts/
+mlflow.db
+*.sqlite
+
+# Notebook checkpoints .ipynb_checkpoints
+
+# CI/CD temporary output/download folders
+best_model_artifact_output/
+model_to_serve/
+temp_best_model_download/
+mlruns_downloaded/
+best_run_id_output.txt

@@ -1,0 +1,7 @@
+mlflow>=2.0.0,<3.0.0
+scikit-learn
+Flask
+waitress
+numpy
+pandas
+gunicorn
