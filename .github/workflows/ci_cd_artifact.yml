@@ -159,12 +159,12 @@ jobs:
   deploy-to-render:
     needs: build-docker-image # Chạy sau khi build image thành công
     runs-on: ubuntu-latest
-    if: needs.build-docker-image.result == 'success' # Chỉ chạy nếu job trước thành công
+    if: needs.build-docker-image.result == 'success' 
 
     steps:
     - name: Trigger Render Deploy Hook
       env:
-        RENDER_DEPLOY_HOOK_URL: ${{ secrets.RENDER_DEPLOY_HOOK_URL }} # Secret chứa URL deploy hook của Render
+        RENDER_DEPLOY_HOOK_URL: ${{ secrets.RENDER_DEPLOY_HOOK_URL }} 
       run: |
         if [ -z "$RENDER_DEPLOY_HOOK_URL" ]; then
           echo "CANH BAO: Secret RENDER_DEPLOY_HOOK_URL chua duoc thiet lap. Bo qua buoc deploy."
