@@ -155,28 +155,28 @@ jobs:
         cache-from: type=gha
         cache-to: type=gha,mode=max
 
-  # # ---- Job 3: Trigger Deploy trên Render ----
-  # deploy-to-render:
-  #   needs: build-docker-image # Chạy sau khi build image thành công
-  #   runs-on: ubuntu-latest
-  #   if: needs.build-docker-image.result == 'success' # Chỉ chạy nếu job trước thành công
+  # ---- Job 3: Trigger Deploy trên Render ----
+  deploy-to-render:
+    needs: build-docker-image # Chạy sau khi build image thành công
+    runs-on: ubuntu-latest
+    if: needs.build-docker-image.result == 'success' # Chỉ chạy nếu job trước thành công
 
-  #   steps:
-  #   - name: Trigger Render Deploy Hook
-  #     env:RENDER_DEPLOY_HOOK_URL
-  #       : ${{ secrets.RENDER_DEPLOY_HOOK_URL }} # Secret chứa URL deploy hook của Render
-  #     run: |
-  #       if [ -z "$RENDER_DEPLOY_HOOK_URL" ]; then
-  #         echo "CANH BAO: Secret RENDER_DEPLOY_HOOK_URL chua duoc thiet lap. Bo qua buoc deploy."
-  #         exit 0
-  #       else
-  #         echo "Kich hoat Render deployment de keo image moi nhat tu GHCR..."
-  #         RESPONSE_CODE=$(curl -s -o /dev/null -w "%{http_code}" -X POST -d '' "$RENDER_DEPLOY_HOOK_URL")
-  #         echo "Render Deploy Hook response code: $RESPONSE_CODE"
-  #         if [ "$RESPONSE_CODE" -ge 200 ] && [ "$RESPONSE_CODE" -lt 300 ]; then
-  #            echo "Render deployment da duoc kich hoat thanh cong."
-  #         else
-  #            echo "!!! Loi khi kich hoat Render deployment hook (HTTP Code: $RESPONSE_CODE)."
-  #            # exit 1 # Cân nhắc làm fail nếu trigger lỗi
-  #         fi
-  #       fi
+    steps:
+    - name: Trigger Render Deploy Hook
+      env:RENDER_DEPLOY_HOOK_URL
+        : ${{ secrets.RENDER_DEPLOY_HOOK_URL }} # Secret chứa URL deploy hook của Render
+      run: |
+        if [ -z "$RENDER_DEPLOY_HOOK_URL" ]; then
+          echo "CANH BAO: Secret RENDER_DEPLOY_HOOK_URL chua duoc thiet lap. Bo qua buoc deploy."
+          exit 0
+        else
+          echo "Kich hoat Render deployment de keo image moi nhat tu GHCR..."
+          RESPONSE_CODE=$(curl -s -o /dev/null -w "%{http_code}" -X POST -d '' "$RENDER_DEPLOY_HOOK_URL")
+          echo "Render Deploy Hook response code: $RESPONSE_CODE"
+          if [ "$RESPONSE_CODE" -ge 200 ] && [ "$RESPONSE_CODE" -lt 300 ]; then
+             echo "Render deployment da duoc kich hoat thanh cong."
+          else
+             echo "!!! Loi khi kich hoat Render deployment hook (HTTP Code: $RESPONSE_CODE)."
+             # exit 1 # Cân nhắc làm fail nếu trigger lỗi
+          fi
+        fi
