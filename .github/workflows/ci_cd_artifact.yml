@@ -163,8 +163,8 @@ jobs:
 
     steps:
     - name: Trigger Render Deploy Hook
-      env:RENDER_DEPLOY_HOOK_URL
-        : ${{ secrets.RENDER_DEPLOY_HOOK_URL }} # Secret chứa URL deploy hook của Render
+      env:
+        RENDER_DEPLOY_HOOK_URL: ${{ secrets.RENDER_DEPLOY_HOOK_URL }} # Secret chứa URL deploy hook của Render
       run: |
         if [ -z "$RENDER_DEPLOY_HOOK_URL" ]; then
           echo "CANH BAO: Secret RENDER_DEPLOY_HOOK_URL chua duoc thiet lap. Bo qua buoc deploy."
