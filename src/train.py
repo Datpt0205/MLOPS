@@ -16,7 +16,7 @@ from src.data_generator import get_data
 from src.utils import evaluate_model
 from src.config import (
     MLFLOW_EXPERIMENT_NAME,
-    MLFLOW_MODEL_NAME_REFERENCE,  # Chỉ dùng tên để tham khảo
+    # MLFLOW_MODEL_NAME_REFERENCE,  # Chỉ dùng tên để tham khảo
     MODEL_TYPE,
     MODEL_PARAMS,
     PRIMARY_METRIC,
