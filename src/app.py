@@ -3,7 +3,7 @@ import mlflow
 import mlflow.pyfunc
 import pandas as pd
 import numpy as np
-from flask import Flask, request, jsonify, render_template_string
+from flask import Flask, request, jsonify, render_template
 import time
 import os
 import traceback
@@ -180,10 +180,20 @@ def predict_batch():
 
 @app.route("/", methods=["GET"])
 def home():
-    # Form HTML đơn giản để test
-    # ... (Giữ nguyên form HTML như phiên bản trước) ...
-    form_html = f"""<!DOCTYPE html><html><head><title>MLflow Flask API (Artifact)</title></head><body><h1>Du doan voi Model (tu Artifact)</h1><p>Model Path Configured: {MODEL_PATH}</p><p>Trang thai model: {'OK' if model else 'ERROR'}</p>{f'<p style="color:red;">Loi load model: {model_load_error}</p>' if model_load_error else ''}<hr><form id="predictForm"><label for="features">Nhap {N_FEATURES} features (cach nhau boi dau phay):</label><br><input type="text" id="features" name="features" size="50" value="{','.join(['0.5']*N_FEATURES)}"><br><br><button type="button" onclick="sendPrediction()">Du doan</button></form><hr><h2>Ket qua:</h2><pre id="result"></pre><script>function sendPrediction() {{ const featuresInput = document.getElementById('features').value; const featuresArray = featuresInput.split(',').map(Number); const resultDiv = document.getElementById('result'); resultDiv.textContent = 'Dang gui yeu cau...'; if (featuresArray.length !== {N_FEATURES} || featuresArray.some(isNaN)) {{ resultDiv.textContent = 'Loi: Vui long nhap dung {N_FEATURES} so cach nhau boi dau phay.'; return; }} fetch('/predict', {{ method: 'POST', headers: {{ 'Content-Type': 'application/json' }}, body: JSON.stringify({{ features: featuresArray }}) }}).then(response => response.json()).then(data => {{ resultDiv.textContent = JSON.stringify(data, null, 2); }}).catch(error => {{ resultDiv.textContent = 'Loi khi goi API: ' + error; }}); }}</script></body></html>"""
-    return render_template_string(form_html)
+    # # Form HTML đơn giản để test
+    # # ... (Giữ nguyên form HTML như phiên bản trước) ...
+    # form_html = f"""<!DOCTYPE html><html><head><title>MLflow Flask API (Artifact)</title></head><body><h1>Du doan voi Model (tu Artifact)</h1><p>Model Path Configured: {MODEL_PATH}</p><p>Trang thai model: {'OK' if model else 'ERROR'}</p>{f'<p style="color:red;">Loi load model: {model_load_error}</p>' if model_load_error else ''}<hr><form id="predictForm"><label for="features">Nhap {N_FEATURES} features (cach nhau boi dau phay):</label><br><input type="text" id="features" name="features" size="50" value="{','.join(['0.5']*N_FEATURES)}"><br><br><button type="button" onclick="sendPrediction()">Du doan</button></form><hr><h2>Ket qua:</h2><pre id="result"></pre><script>function sendPrediction() {{ const featuresInput = document.getElementById('features').value; const featuresArray = featuresInput.split(',').map(Number); const resultDiv = document.getElementById('result'); resultDiv.textContent = 'Dang gui yeu cau...'; if (featuresArray.length !== {N_FEATURES} || featuresArray.some(isNaN)) {{ resultDiv.textContent = 'Loi: Vui long nhap dung {N_FEATURES} so cach nhau boi dau phay.'; return; }} fetch('/predict', {{ method: 'POST', headers: {{ 'Content-Type': 'application/json' }}, body: JSON.stringify({{ features: featuresArray }}) }}).then(response => response.json()).then(data => {{ resultDiv.textContent = JSON.stringify(data, null, 2); }}).catch(error => {{ resultDiv.textContent = 'Loi khi goi API: ' + error; }}); }}</script></body></html>"""
+    # return render_template_string(form_html)
+    """Render trang chủ từ file template index.html"""
+    model_status = "OK" if model is not None else "ERROR"
+    # Truyền các biến cần thiết sang template
+    return render_template(
+        "index.html",
+        model_path=MODEL_PATH,
+        model_status=model_status,
+        error_message=model_load_error,
+        n_features=N_FEATURES,
+    )
 
 
 # Chạy Flask app bằng Waitress
