@@ -16,7 +16,7 @@ jobs:
         python-version: ["3.9"]
     # Output để job sau có thể dùng nếu cần (ví dụ: tên model nếu động)
     outputs:
-       best_model_artifact_name: best-model-${{ github.run_id }}
+       best_model_artifact_name: best-overall-model-${{ github.run_id }}
        mlruns_artifact_name: mlflow-runs-${{ github.run_id }}
 
     steps:
