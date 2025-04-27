@@ -31,7 +31,7 @@ jobs:
 
     - name: Install dependencies
       run: |
-        python -m pip install --upgrade pip
+        python3 -m pip install --upgrade pip
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
         pip install flake8 black
 
@@ -43,7 +43,7 @@ jobs:
 
     - name: Run Training Script (Creates ./mlruns and ./best_model_artifact_output)
       id: training_run
-      run: python -m src/train.py
+      run: python3 -m src/train.py
 
     - name: Check if Best Model Output Dir exists # Kiểm tra xem train.py có tạo ra output không
       id: check_best_model_output
