@@ -17,9 +17,9 @@ import traceback
 import shutil  # Dùng để copy thư mục
 
 # Local imports
-from .data_generator import get_data
-from .utils import evaluate_model
-from .config import (
+from src.data_generator import get_data
+from src.utils import evaluate_model
+from src.config import (
     MLFLOW_EXPERIMENT_NAME,
     MODEL_TYPE,
     MODEL_PARAMS,
