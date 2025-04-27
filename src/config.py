@@ -20,6 +20,7 @@ API_PORT = int(os.getenv("PORT", "8000"))
 print(f"API_HOST: {API_HOST}")
 print(f"API_PORT: {API_PORT}")
 
+# --- Cấu hình Huấn luyện & Dữ liệu (Giữ nguyên) ---
 # --- Cấu hình Huấn luyện & Dữ liệu ---
 N_SAMPLES = int(os.getenv("N_SAMPLES", "1000"))
 N_FEATURES = int(os.getenv("N_FEATURES", "10"))
@@ -36,5 +37,4 @@ HYPERPARAMS_TO_TUNE = {
 MODEL_PARAMS = HYPERPARAMS_TO_TUNE.get(MODEL_TYPE, {})
 PRIMARY_METRIC = os.getenv("PRIMARY_METRIC", "accuracy")
 
-print(f"MODEL_TYPE: {MODEL_TYPE}")
 print("--- Doc config.py xong ---")

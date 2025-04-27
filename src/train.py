@@ -1,22 +1,26 @@
 # src/train.py
 import mlflow
-import mlflow.sklearn
+
+# Model classes
 from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.svm import SVC
+
 from sklearn.preprocessing import StandardScaler
 from sklearn.pipeline import Pipeline
+
 import itertools
 import pandas as pd
 import os
 import traceback
+
 import shutil  # Dùng để copy thư mục
 
-from data_generator import get_data
-from utils import evaluate_model
-from config import (
+# Local imports
+from src.data_generator import get_data
+from src.utils import evaluate_model
+from src.config import (
     MLFLOW_EXPERIMENT_NAME,
-    # MLFLOW_MODEL_NAME_REFERENCE,  # Chỉ dùng tên để tham khảo
     MODEL_TYPE,
     MODEL_PARAMS,
     PRIMARY_METRIC,
@@ -115,6 +119,7 @@ def train_and_log():
                 mlflow.sklearn.log_model(
                     sk_model=pipeline, artifact_path="model", signature=signature
                 )
+
                 print("Log model artifact thanh cong.")
                 # --- Kết thúc huấn luyện & log artifact ---
 
@@ -138,7 +143,6 @@ def train_and_log():
                     print(
                         f"CANH BAO: Metric chinh '{PRIMARY_METRIC}' khong tim thay trong run {run_id}."
                     )
-
         except Exception as e_run:
             print(f"!!! Loi trong MLflow Run ID {run_id}: {e_run}")
             print(traceback.format_exc())
@@ -150,11 +154,9 @@ def train_and_log():
             print("--- Ket thuc Run (FAILED) ---")
             continue
 
-    print("\n--- Ket thuc tat ca thu nghiem ---")
     if not run_results:
         print("Khong co run nao hoan thanh thanh cong.")
         return
-
     # Tìm best run cuối cùng
     run_results.sort(key=lambda x: x["primary_metric_value"], reverse=True)
     best_run = run_results[0]

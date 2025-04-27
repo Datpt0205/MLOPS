@@ -1,7 +1,7 @@
 # src/data_generator.py
 from sklearn.datasets import make_classification
 from sklearn.model_selection import train_test_split
-from config import (
+from src.config import (
     N_SAMPLES,
     N_FEATURES,
     N_CLASSES,
