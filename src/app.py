@@ -9,7 +9,7 @@ import os
 import traceback
 
 # Import cấu hình (chỉ cần PORT, HOST, N_FEATURES)
-from src.config import API_HOST, API_PORT, N_FEATURES
+from .config import API_HOST, API_PORT, N_FEATURES
 
 # --- Đường dẫn tới model bên trong container ---
 MODEL_PATH = "/app/model_to_serve"
