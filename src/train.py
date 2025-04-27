@@ -24,7 +24,7 @@ import time  # Để đo thời gian huấn luyện
 # Local imports
 from data_generator import get_data
 from utils import evaluate_model
-from config import (
+from src.config import (
     MLFLOW_EXPERIMENT_NAME,
     MODELS_TO_TRAIN,  # Danh sách các model cần huấn luyện
     HYPERPARAMS_DISTRIBUTIONS,  # Phân phối tham số cho từng model
