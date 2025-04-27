@@ -62,7 +62,7 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: best-overall-model-${{ github.run_id }} # Tên artifact chứa model tốt nhất
-        path: ./best_model_artifact_output # Upload thư mục này
+        path: ./best_overall_model_artifact # Upload thư mục này
         retention-days: 5 # Giữ artifact trong 5 ngày
 
     - name: Upload Full MLruns Directory (Optional, for debugging/review)
