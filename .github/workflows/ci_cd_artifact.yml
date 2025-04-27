@@ -43,7 +43,8 @@ jobs:
 
     - name: Run Training Script (Creates ./mlruns and ./best_model_artifact_output)
       id: training_run
-      env: PYTHONPATH: ${{ github.workspace }}
+      env: 
+        PYTHONPATH: ${{ github.workspace }}
       run: python -m src/train
 
     - name: Check if Best Model Output Dir exists # Kiểm tra xem train.py có tạo ra output không
