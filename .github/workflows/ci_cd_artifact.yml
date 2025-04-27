@@ -16,7 +16,7 @@ jobs:
         python-version: ["3.9"]
     # Output để job sau có thể dùng nếu cần (ví dụ: tên model nếu động)
     outputs:
-       best_model_artifact_name: best-overall-model-${{ github.run_id }}
+       best_model_artifact_name: best-model-${{ github.run_id }}
        mlruns_artifact_name: mlflow-runs-${{ github.run_id }}
 
     steps:
@@ -45,24 +45,24 @@ jobs:
       id: training_run
       run: python src/train.py
 
-    - name: Check if Best Model Output Dir exists
+    - name: Check if Best Model Output Dir exists # Kiểm tra xem train.py có tạo ra output không
       id: check_best_model_output
       run: |
-        if [ -d "best_overall_model_artifact" ]; then
-          echo "Thu muc best_overall_model_artifact ton tai."
+        if [ -d "best_model_artifact_output" ]; then
+          echo "Thu muc best_model_artifact_output ton tai."
           echo "exists=true" >> $GITHUB_OUTPUT
         else
-          echo "LOI: Khong tim thay thu muc best_overall_model_artifact sau khi chay train.py!"
+          echo "LOI: Khong tim thay thu muc best_model_artifact_output sau khi chay train.py!"
           echo "exists=false" >> $GITHUB_OUTPUT
-          exit 1
+          exit 1 # Làm fail job nếu không có model tốt nhất để deploy
         fi
 
     - name: Upload Best Model Artifact Directory
       if: steps.check_best_model_output.outputs.exists == 'true'
       uses: actions/upload-artifact@v4
       with:
-        name: best-overall-model-${{ github.run_id }} # Tên artifact chứa model tốt nhất
-        path: ./best_overall_model_artifact # Upload thư mục này
+        name: best-model-${{ github.run_id }} # Tên artifact chứa model tốt nhất
+        path: ./best_model_artifact_output # Upload thư mục này
         retention-days: 5 # Giữ artifact trong 5 ngày
 
     - name: Upload Full MLruns Directory (Optional, for debugging/review)
