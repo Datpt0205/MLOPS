@@ -45,16 +45,16 @@ jobs:
       id: training_run
       run: python src/train.py
 
-    - name: Check if Best Model Output Dir exists # Kiểm tra xem train.py có tạo ra output không
+    - name: Check if Best Model Output Dir exists
       id: check_best_model_output
       run: |
-        if [ -d "best_model_artifact_output" ]; then
-          echo "Thu muc best_model_artifact_output ton tai."
+        if [ -d "best_overall_model_artifact" ]; then
+          echo "Thu muc best_overall_model_artifact ton tai."
           echo "exists=true" >> $GITHUB_OUTPUT
         else
-          echo "LOI: Khong tim thay thu muc best_model_artifact_output sau khi chay train.py!"
+          echo "LOI: Khong tim thay thu muc best_overall_model_artifact sau khi chay train.py!"
           echo "exists=false" >> $GITHUB_OUTPUT
-          exit 1 # Làm fail job nếu không có model tốt nhất để deploy
+          exit 1
         fi
 
     - name: Upload Best Model Artifact Directory
