@@ -61,7 +61,7 @@ jobs:
       if: steps.check_best_model_output.outputs.exists == 'true'
       uses: actions/upload-artifact@v4
       with:
-        name: best-model-${{ github.run_id }} # Tên artifact chứa model tốt nhất
+        name: best-overall-model-${{ github.run_id }} # Tên artifact chứa model tốt nhất
         path: ./best_model_artifact_output # Upload thư mục này
         retention-days: 5 # Giữ artifact trong 5 ngày
 
